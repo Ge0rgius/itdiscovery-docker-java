@@ -7,7 +7,13 @@ RUN mvn dependency:resolve
 COPY . /opt/
 RUN mvn install spring-boot:repackage
 
-FROM eclipse-temurin:19-alpine
+FROM eclipse-temurin:19-alpine as temurin
+
+RUN jlink --add-modules ALL-MODULE-PATH --strip-java-debug-attributes --compress=2 --output /opt/jdk/
+
+FROM alpine:3.16
+
+COPY --from=temurin /opt/jdk /jdk
 COPY --from=base /opt/target/spring-boot-docker.jar app.jar
-ENV JAVA_OPTS=""
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+
+ENTRYPOINT ["/jdk/bin/java", "-jar", "/app.jar"]
