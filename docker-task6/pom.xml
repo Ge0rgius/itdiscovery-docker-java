@@ -17,45 +17,14 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.40.2</version>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
-                    <images>
-                        <image>
-                            <name>smorenets/task8:${project.version}</name>
-                            <build>
-                                <from>openjdk:19-alpine</from>
-                                <assembly>
-                                    <descriptor>${basedir}/src/main/resources/docker/assembly.xml</descriptor>
-                                </assembly>
-                                <cmd>java -Djava.security.egd=file:/dev/./urandom -jar /maven/demo.jar</cmd>
-                            </build>
-                            <run>
-                                <ports>
-                                    <port>tomcat.port:8080</port>
-                                </ports>
-                            </run>
-                        </image>
-                    </images>
+                    <to>
+                        <image>it-discovery/task9</image>
+                    </to>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>start</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>stop</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
