@@ -1,4 +1,4 @@
-FROM openjdk:19-alpine
+FROM eclipse-temurin:19-alpine
 
 LABEL Author="Sergiy Morenets"
 
