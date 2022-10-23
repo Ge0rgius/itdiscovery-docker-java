@@ -5,6 +5,14 @@ services:
     build:
       context: mysql
       dockerfile: mysql.dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: discovery
+    healthcheck:
+      test: mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SHOW DATABASES;"
+      interval: 1m
+    networks:
+      - task11-network
   jvm:
     build:
       context: jvm
@@ -15,3 +23,11 @@ services:
     entrypoint: /bin/sh -c "sleep 5s && java -classpath .:/sources/mysql-connector-java-8.0.19.jar MainStarter"
     tty: true
     stdin_open: true
+    labels:
+      Author: "Sergiy Morenets"
+    networks:
+      - task11-network
+networks:
+  task11-network:
+    driver: bridge
+
