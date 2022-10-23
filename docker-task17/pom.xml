@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>it.discovery</groupId>
-        <artifactId>docker-training</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.0-RC1</version>
     </parent>
     <artifactId>docker-task17</artifactId>
     <version>1.0</version>
@@ -39,6 +39,8 @@
                 </executions>
                 <configuration>
                     <mainClass>HelloWorld</mainClass>
+                    <imageName>graalvm</imageName>
+                    <buildArgs>--static</buildArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -51,4 +53,26 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

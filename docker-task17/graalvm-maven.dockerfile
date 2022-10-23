@@ -1,4 +1,5 @@
-﻿FROM ghcr.io/graalvm/graalvm-ce:22 as graalvm
+﻿# syntax=docker/dockerfile:experimental
+FROM ghcr.io/graalvm/graalvm-ce:22 as graalvm
 
 RUN gu install native-image
 
@@ -12,10 +13,15 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && rm -f /tmp/apache-maven.tar.gz \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-#Copy and build the project
+COPY pom.xml /opt/
+WORKDIR /opt
+RUN --mount=type=cache,target=/root/.m2 mvn dependency:resolve
 
-FROM ubuntu
+COPY . /opt/
+RUN --mount=type=cache,target=/root/.m2 mvn install spring-boot:repackage
+
+FROM scratch
 
 COPY --from=graalvm /opt/target/graalvm /graalvm
 
-CMD ./graalvm
+ENTRYPOINT ["./graalvm"]
