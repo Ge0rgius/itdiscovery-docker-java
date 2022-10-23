@@ -1,5 +1,6 @@
 package it.discovery;
 
+import it.discovery.model.Product;
 import it.discovery.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Testcontainers
 @AutoConfigureDataJpa
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
@@ -19,7 +22,7 @@ public class ProductControllerTest {
 
 	@Container
 	static MySQLContainer mysql = new MySQLContainer<>("mysql:8")
-			.withExposedPorts(3306);
+			.withExposedPorts(3306).withReuse(true);
 
 	@DynamicPropertySource
 	static void mysqlProperties(DynamicPropertyRegistry registry) {
@@ -33,6 +36,13 @@ public class ProductControllerTest {
 
 	@Test
 	void saveProduct_success() {
+		Product product = new Product();
+
+		product.setName("Computer");
+		productRepository.save(product);
+
+		Product product1 = productRepository.findById(product.getId()).orElseThrow();
+		assertEquals(product.getName(), product1.getName());
 
 	}
 }
