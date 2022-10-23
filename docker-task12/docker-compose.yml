@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: client
+      dockerfile: client.dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - server
+    networks:
+      - network1
+  server:
+    build:
+      context: server
+      dockerfile: server.dockerfile
+    networks:
+      - network1
+networks:
+  network1:
+    driver: bridge
