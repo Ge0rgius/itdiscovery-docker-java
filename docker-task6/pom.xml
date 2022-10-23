@@ -8,6 +8,9 @@
         <version>3.0.0-RC1</version>
     </parent>
     <artifactId>docker-task6</artifactId>
+    <properties>
+        <task>14</task>
+    </properties>
 
     <build>
         <finalName>spring-boot-docker</finalName>
