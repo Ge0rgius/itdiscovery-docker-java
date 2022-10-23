@@ -1,11 +1,17 @@
-version: '3.7'
+version: '3.8'
 
 services:
   mysql:
     build:
-      context: .
-      dockerfile: mysql/mysql.dockerfile
+      context: mysql
+      dockerfile: mysql.dockerfile
   jvm:
     build:
-      context: .
-      dockerfile: jvm/jvm.dockerfile 
+      context: jvm
+      dockerfile: jvm.dockerfile
+    depends_on:
+      - mysql
+    #restart: on-failure
+    entrypoint: /bin/sh -c "sleep 5s && java -classpath .:/sources/mysql-connector-java-8.0.19.jar MainStarter"
+    tty: true
+    stdin_open: true
