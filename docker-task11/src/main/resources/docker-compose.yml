@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: discovery
     healthcheck:
-      test: mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "SHOW DATABASES;"
+      test: mysql -uroot -p$${MYSQL_ROOT_PASSWORD} -e "SHOW DATABASES;"
       interval: 1m
     networks:
       - task11-network
