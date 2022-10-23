@@ -17,7 +17,7 @@
 
     <build>
         <plugins>
-            <!--plugin>
+            <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
                 <version>${native.maven.plugin.version}</version>
@@ -38,9 +38,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                  <mainClass>HelloWorld</mainClass>
+                    <mainClass>HelloWorld</mainClass>
                 </configuration>
-            </plugin-->
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
